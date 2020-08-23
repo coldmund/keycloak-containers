@@ -1,14 +1,10 @@
 version: '3'
 
-volumes:
-  db_data:
-      driver: local
-
 services:
   mariadb:
       image: mariadb
       volumes:
-        - db_data:/var/lib/mysql
+        - ./db_data:/var/lib/mysql
       environment:
         MYSQL_ROOT_PASSWORD: qwer1234
         MYSQL_DATABASE: keycloak
@@ -22,7 +18,8 @@ services:
   keycloak:
       image: jboss/keycloak
       ports:
-        - "18080:8080"
+        #- "18080:8080"
+        - "8543:8443"
       environment:
         DB_VENDOR: mariadb
         DB_ADDR: mariadb
@@ -31,7 +28,9 @@ services:
         DB_PASSWORD: qwer1234
         KEYCLOAK_USER: admin
         KEYCLOAK_PASSWORD: qwer1234
-        JGROUPS_DISCOVERY_PROTOCOL: JDBC_PING
-        JGROUPS_DISCOVERY_PROPERTIES: datasource_jndi_name=java:jboss/datasources/KeycloakDS,info_writer_sleep_time=500
+        #JGROUPS_DISCOVERY_PROTOCOL: JDBC_PING
+        #JGROUPS_DISCOVERY_PROPERTIES: datasource_jndi_name=java:jboss/datasources/KeycloakDS,info_writer_sleep_time=500
+      volumes:
+        - "./cert/:/etc/x509/https/"
       depends_on:
         - mariadb
