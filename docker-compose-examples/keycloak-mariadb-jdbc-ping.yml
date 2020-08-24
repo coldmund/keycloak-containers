@@ -30,7 +30,10 @@ services:
         KEYCLOAK_PASSWORD: qwer1234
         #JGROUPS_DISCOVERY_PROTOCOL: JDBC_PING
         #JGROUPS_DISCOVERY_PROPERTIES: datasource_jndi_name=java:jboss/datasources/KeycloakDS,info_writer_sleep_time=500
+        KEYCLOAK_IMPORT: /tmp/realm_export/bicman-hospital.json
       volumes:
         - "./cert/:/etc/x509/https/"
+        - "./keycloak_volume:/tmp"
+        - "./realm_export:/tmp/realm_export"
       depends_on:
         - mariadb

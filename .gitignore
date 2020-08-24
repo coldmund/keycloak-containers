@@ -1,2 +1,4 @@
 .idea
 *.iml
+docker-compose-examples/db_data/
+docker-compose-examples/keycloak_voluem/
